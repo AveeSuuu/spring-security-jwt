@@ -5,13 +5,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
-class CreateUserCredentialsUseCase {
+class GetUserCredentialsByUserIdUseCase {
 
     private final UserCredentialsRepository repository;
-    //TODO add password encoder once all works fine :)
 
-    public void invoke(UUID userId, String password) {
-        var event = UserCredentials.create(userId, password);
-        repository.apply(event);
+    public UserCredentials invoke(UUID userId) {
+        return repository.findByUserId(userId).orElse(null);
     }
 }

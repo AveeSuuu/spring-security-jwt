@@ -9,31 +9,24 @@
         <version>3.4.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
+
     <groupId>dev.avee</groupId>
     <artifactId>bettersecurity</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>bettersecurity</name>
-    <description>bettersecurity</description>
-    <url/>
-    <licenses>
-        <license/>
-    </licenses>
-    <developers>
-        <developer/>
-    </developers>
-    <scm>
-        <connection/>
-        <developerConnection/>
-        <tag/>
-        <url/>
-    </scm>
+
     <properties>
         <java.version>21</java.version>
     </properties>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-jose</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

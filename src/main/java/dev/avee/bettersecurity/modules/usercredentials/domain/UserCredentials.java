@@ -2,7 +2,11 @@ package dev.avee.bettersecurity.modules.usercredentials.domain;
 
 import dev.avee.bettersecurity.modules.usercredentials.domain.event.UserCredentialsCreatedEvent;
 import java.util.UUID;
+import lombok.Builder;
+import lombok.Getter;
 
+@Builder
+@Getter
 public class UserCredentials {
 
     private UUID id;

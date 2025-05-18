@@ -1,8 +1,6 @@
-package dev.avee.bettersecurity.modules.security.domain;
+package dev.avee.bettersecurity.modules.auth.domain;
 
-import dev.avee.bettersecurity.modules.auth.domain.PrincipalImpl;
-
-public interface SecurityService {
+public interface PrincipalService {
 
     PrincipalImpl getPrincipal();
     void setAuthentication(PrincipalImpl principal);

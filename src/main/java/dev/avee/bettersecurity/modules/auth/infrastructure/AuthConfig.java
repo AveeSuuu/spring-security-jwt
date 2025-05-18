@@ -1,6 +1,7 @@
 package dev.avee.bettersecurity.modules.auth.infrastructure;
 
 import dev.avee.bettersecurity.modules.auth.domain.AuthFacade;
+import dev.avee.bettersecurity.modules.auth.domain.PrincipalService;
 import dev.avee.bettersecurity.modules.token.domain.TokenFacade;
 import dev.avee.bettersecurity.modules.user.domain.UserFacade;
 import dev.avee.bettersecurity.modules.usercredentials.domain.UserCredentialsFacade;
@@ -19,5 +20,10 @@ class AuthConfig {
     @Bean
     UserDetailsService userDetailsService(UserFacade userFacade, UserCredentialsFacade userCredentialsFacade) {
         return new UserDetailsServiceImpl(userFacade, userCredentialsFacade);
+    }
+
+    @Bean
+    PrincipalService principalService() {
+        return new PrincipalServiceImpl();
     }
 }

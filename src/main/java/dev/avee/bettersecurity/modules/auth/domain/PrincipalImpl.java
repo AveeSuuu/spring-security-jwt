@@ -6,30 +6,27 @@ import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
-import lombok.Getter;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-@Getter
-public class PrincipalImpl implements Principal, UserDetails {
+public class PrincipalImpl implements Authentication, Principal, UserDetails {
 
-    private final UUID id;
-    private final String email;
-    private final String firstName;
-    private final String lastName;
-    private final String password;
+    private final User user;
+    private final UserCredentials credentials;
 
     public PrincipalImpl(User user, UserCredentials userCredentials) {
-        this.id = user.getId();
-        this.email = user.getEmail();
-        this.firstName = user.getFirstName();
-        this.lastName = user.getLastName();
-        this.password = userCredentials.getPassword();
+        this.user = user;
+        this.credentials = userCredentials;
+    }
+
+    public UUID getId() {
+        return user.getId();
     }
 
     @Override
     public String getName() {
-        return "%s %s".formatted(this.firstName, this.lastName);
+        return "%s %s".formatted(this.user.getFirstName(), this.user.getLastName());
     }
 
     @Override
@@ -38,12 +35,37 @@ public class PrincipalImpl implements Principal, UserDetails {
     }
 
     @Override
+    public Object getCredentials() {
+        return this.credentials;
+    }
+
+    @Override
+    public Object getDetails() {
+        return null;
+    }
+
+    @Override
+    public Object getPrincipal() {
+        return this.user;
+    }
+
+    @Override
+    public boolean isAuthenticated() {
+        return true;
+    }
+
+    @Override
+    public void setAuthenticated(boolean isAuthenticated) throws IllegalArgumentException {
+
+    }
+
+    @Override
     public String getPassword() {
-        return this.password;
+        return this.credentials.getPassword();
     }
 
     @Override
     public String getUsername() {
-        return this.email;
+        return this.user.getEmail();
     }
 }

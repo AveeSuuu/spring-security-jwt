@@ -12,7 +12,19 @@ import org.springframework.stereotype.Repository;
 @Repository
 class InMemoryUserRepository implements UserRepository {
 
-    private final Map<UUID, User> users = new ConcurrentHashMap<>();
+    private final Map<UUID, User> users;
+
+    public InMemoryUserRepository() {
+        this.users = new ConcurrentHashMap<>();
+        var id = UUID.fromString("57fb058f-dcf9-4a38-b1cc-888a8cacf8b8");
+        users.put(
+            id, User.builder()
+                .id(id)
+                .email("admin@avee.tech")
+                .firstName("Avee")
+                .lastName("Suu")
+                .build());
+    }
 
     @Override
     public Optional<User> findById(UUID id) {

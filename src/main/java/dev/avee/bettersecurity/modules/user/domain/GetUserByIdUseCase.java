@@ -7,9 +7,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class GetUserByIdUseCase {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
     public User invoke(UUID id) {
-        return userRepository.findById(id).orElse(null);
+        return repository.findById(id).orElse(null);
     }
 }

@@ -4,7 +4,7 @@ import dev.avee.bettersecurity.modules.usercredentials.domain.event.UserCredenti
 import java.util.Optional;
 import java.util.UUID;
 
-public interface UserCredentialsService {
+public interface UserCredentialsRepository {
 
     Optional<UserCredentials> findByUserId(UUID userId);
 

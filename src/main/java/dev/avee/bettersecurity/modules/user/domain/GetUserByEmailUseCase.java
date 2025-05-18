@@ -6,9 +6,9 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class GetUserByEmailUseCase {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
     public User invoke(String email) {
-        return userRepository.findByEmail(email).orElse(null);
+        return repository.findByEmail(email).orElse(null);
     }
 }

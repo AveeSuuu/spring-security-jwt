@@ -7,11 +7,11 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor(access = AccessLevel.PACKAGE)
 class CreateUserUseCase {
 
-    private final UserRepository userRepository;
+    private final UserRepository repository;
 
     UUID invoke(String email, String firstName, String lastName) {
         var event = User.create(email, firstName, lastName);
-        userRepository.apply(event);
+        repository.apply(event);
         return event.id();
     }
 }

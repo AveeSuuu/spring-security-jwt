@@ -1,0 +1,3 @@
+security:
+  jwt:
+    secret-key: kutaskozua123123132123

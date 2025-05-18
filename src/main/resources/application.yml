@@ -1,6 +1,10 @@
 spring:
   application:
     name: bettersecurity
+
+  profiles:
+    active: security
+
   main:
     banner-mode: off
 

@@ -1,0 +1,24 @@
+package dev.avee.bettersecurity.modules.usercredentials.infrastructure;
+
+import dev.avee.bettersecurity.modules.usercredentials.domain.UserCredentials;
+import dev.avee.bettersecurity.modules.usercredentials.domain.UserCredentialsRepository;
+import dev.avee.bettersecurity.modules.usercredentials.domain.event.UserCredentialsCreatedEvent;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.concurrent.ConcurrentHashMap;
+
+class InMemoryUserCredentialsRepository implements UserCredentialsRepository {
+
+    private final Map<UUID, UserCredentials> userCredentials = new ConcurrentHashMap<>();
+
+    @Override
+    public Optional<UserCredentials> findByUserId(UUID userId) {
+        return Optional.empty();
+    }
+
+    @Override
+    public void apply(UserCredentialsCreatedEvent event) {
+
+    }
+}

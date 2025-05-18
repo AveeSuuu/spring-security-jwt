@@ -1,3 +1,5 @@
 security:
   jwt:
-    secret-key: classpath:certs/secret.pem
+    public-key: classpath:certs/public.pem
+    private-key: classpath:certs/private.pem
+    access-token-ttl-in-minutes: 15

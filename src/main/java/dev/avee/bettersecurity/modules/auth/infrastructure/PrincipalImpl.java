@@ -1,4 +1,4 @@
-package dev.avee.bettersecurity.modules.auth.domain;
+package dev.avee.bettersecurity.modules.auth.infrastructure;
 
 import dev.avee.bettersecurity.modules.user.domain.User;
 import dev.avee.bettersecurity.modules.usercredentials.domain.UserCredentials;
@@ -11,13 +11,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 @Getter
-public class PrincipalImpl implements Principal, UserDetails {
+class PrincipalImpl implements Principal, UserDetails {
 
-    private UUID id;
-    private String email;
-    private String firstName;
-    private String lastName;
-    private String password;
+    private final UUID id;
+    private final String email;
+    private final String firstName;
+    private final String lastName;
+    private final String password;
 
     public PrincipalImpl(User user, UserCredentials userCredentials) {
         this.id = user.getId();

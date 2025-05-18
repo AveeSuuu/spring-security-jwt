@@ -1,6 +1,5 @@
 package dev.avee.bettersecurity.modules.auth.infrastructure;
 
-import dev.avee.bettersecurity.modules.auth.domain.PrincipalImpl;
 import dev.avee.bettersecurity.modules.user.domain.UserFacade;
 import dev.avee.bettersecurity.modules.usercredentials.domain.UserCredentialsFacade;
 import lombok.RequiredArgsConstructor;

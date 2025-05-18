@@ -1,5 +1,8 @@
 package dev.avee.bettersecurity.configuration.security;
 
+import com.nimbusds.jose.jwk.JWKSet;
+import com.nimbusds.jose.jwk.RSAKey;
+import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import dev.avee.bettersecurity.common.properties.JwtProperties;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +17,9 @@ import org.springframework.security.config.annotation.web.configurers.AbstractHt
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.JwtEncoder;
 import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtEncoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -34,7 +39,7 @@ class SecurityConfig {
             .csrf(AbstractHttpConfigurer::disable)
 
             .authorizeHttpRequests(auth -> auth
-                .anyRequest().permitAll()
+                .anyRequest().authenticated()
             )
 
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -58,7 +63,17 @@ class SecurityConfig {
     }
 
     @Bean
+    JwtEncoder jwtEncoder() {
+        var jwk = new RSAKey
+            .Builder(jwtProperties.getPublicKey())
+            .privateKey(jwtProperties.getPrivateKey())
+            .build();
+        var jwkSet = new ImmutableJWKSet<>(new JWKSet(jwk));
+        return new NimbusJwtEncoder(jwkSet);
+    }
+
+    @Bean
     JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withPublicKey(jwtProperties.getSecretKey()).build();
+        return NimbusJwtDecoder.withPublicKey(jwtProperties.getPublicKey()).build();
     }
 }

@@ -6,10 +6,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.oauth2.jwt.JwtDecoder;
+import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.web.BearerTokenAuthenticationEntryPoint;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -21,6 +26,7 @@ import org.springframework.security.web.access.AccessDeniedHandlerImpl;
 class SecurityConfig {
 
     private final JwtProperties jwtProperties;
+    private final UserDetailsService userDetailsService;
 
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -33,23 +39,26 @@ class SecurityConfig {
 
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 
+            .authenticationProvider(authenticationProvider())
+
             .exceptionHandling(customizer -> customizer
                 .accessDeniedHandler(new AccessDeniedHandlerImpl())
                 .authenticationEntryPoint(new BearerTokenAuthenticationEntryPoint())
             )
 
-//            .oauth2ResourceServer((oauth2) -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())))
+            .oauth2ResourceServer((oauth2) -> oauth2.jwt(jwt -> jwt.decoder(jwtDecoder())))
 
             .build();
     }
 
-//    @Bean
-//    JwtDecoder jwtDecoder() {
-//        NimbusJwtDecoder.withSecretKey();
-//    }
-//
-//    @Bean
-//    JwtEncoder jwtEncoder() {
-//        return new NimbusJwtEncoder();
-//    }
+    AuthenticationProvider authenticationProvider() {
+        var authenticationProvider = new DaoAuthenticationProvider();
+        authenticationProvider.setUserDetailsService(userDetailsService);
+        return authenticationProvider;
+    }
+
+    @Bean
+    JwtDecoder jwtDecoder() {
+        return NimbusJwtDecoder.withPublicKey(jwtProperties.getSecretKey()).build();
+    }
 }

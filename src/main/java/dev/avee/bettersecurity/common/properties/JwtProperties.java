@@ -1,5 +1,6 @@
 package dev.avee.bettersecurity.common.properties;
 
+import java.security.interfaces.RSAPublicKey;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -9,5 +10,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "security.jwt")
 public class JwtProperties {
 
-    private String secretKey;
+    private RSAPublicKey secretKey;
 }

@@ -11,3 +11,8 @@ It’s opinionated and helps with separation of concerns, but you’re absolutel
 
 If you prefer to define everything in service classes or stick to simpler layering – go for it!  
 This project is meant to showcase *a* way to implement security, not *the* way 😉
+
+## TODO / Might Happen Next 😄
+
+- 🔄 Add support for refresh tokens
+- 🧩 Maybe break things into Maven modules – just for the fun of it
